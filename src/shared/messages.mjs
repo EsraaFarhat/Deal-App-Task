@@ -7,6 +7,8 @@ const MESSAGES = {
   RESPONSE_OK: "Success",
   UNAUTHORIZED_ERROR: "Unauthorized",
   UNPROCESSABLE_ENTITY_ERROR: "Unprocessable entity",
+
+  INVALID_CREDENTIALS: "invalid email or password",
   
 };
 

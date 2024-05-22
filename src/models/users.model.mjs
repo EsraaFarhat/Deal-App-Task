@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
 import { UserRole, UserStatus } from "../shared/enums.mjs";
 import { comparePassword, hashString } from "../utils/helpers.mjs";
 

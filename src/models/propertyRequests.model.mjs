@@ -34,8 +34,8 @@ const propertyRequestSchema = new mongoose.Schema(
       trim: true,
     },
     refreshedAt: {
-      type: String,
-      required: true,
+      type: Date,
+      default: new Date(),
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,

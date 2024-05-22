@@ -5,7 +5,7 @@ export const UserStatus = Object.freeze({
 
 export const UserRole = Object.freeze({
   ADMIN: "ADMIN",
-  CLIENT: '"CLIENT',
+  CLIENT: 'CLIENT',
   AGENT: "AGENT",
 });
 

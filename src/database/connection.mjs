@@ -3,7 +3,7 @@ import config from "../config/config.mjs";
 import logger from "../shared/logger.mjs";
 
 // Connect to MongoDB
-export const db = mongoose
+const db = mongoose
   .connect(config.mongoose.url, config.mongoose.options)
   .then(() => {
     logger.info("[MongoDB] connected");
@@ -11,3 +11,5 @@ export const db = mongoose
   .catch((err) => {
     logger.error(`[MongoDB] Failed to connect: ${err}`);
   });
+
+export { db };
