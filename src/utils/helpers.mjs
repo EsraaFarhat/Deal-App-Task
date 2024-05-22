@@ -1,5 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+import { SALT } from "../shared/constants.mjs";
+import config from "../config/config.mjs";
 
 export const validateObjectId = (id) => {
   if (!mongoose.isValidObjectId(id)) {
@@ -35,4 +40,18 @@ export const handlePaginationSort = ({
   let sort = {};
   sort[`${orderBy}`] = order;
   return { order, skip, orderBy, limit, sort };
+};
+
+export const hashString = async (str) => {
+  const salt = await bcrypt.genSalt(SALT);
+  const hashedScript = await bcrypt.hash(str, salt);
+  return hashedScript;
+};
+
+export const generateToken = (user, expiresIn = "24h") => {
+  return jwt.sign(user, config.privateKey || "secret", { expiresIn });
+};
+export const comparePassword = async (loginPassword, realPassword) => {
+  const isMatched = await bcrypt.compare(loginPassword, realPassword);
+  return isMatched;
 };
