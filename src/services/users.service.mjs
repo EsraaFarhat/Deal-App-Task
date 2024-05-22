@@ -28,7 +28,7 @@ export default class UsersService {
 
   static userLoginSchema = (body) => {
     const schema = Joi.object({
-      email: Joi.string().min(6).max(50).email().required(),
+      phoneNumber: Joi.string().min(1).max(100).required(),
       password: Joi.string()
         .min(6)
         .regex(

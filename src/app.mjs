@@ -5,8 +5,10 @@ import cors from "cors";
 
 import "./database/connection.mjs";
 import config from "./config/config.mjs";
-import AppErrorHandler from "./config/error.mjs";
+import AppErrorHandler from "./shared/error-handler.mjs";
 import { morganErrorHandler, morganSuccessHandler } from "./config/morgan.mjs";
+
+import authRoutes from "./routes/auth.routes.mjs";
 
 const app = express();
 
@@ -27,8 +29,9 @@ app.use(
 
 app.use(compression());
 
+app.use("/api/auth", authRoutes)
 
-app.use(AppErrorHandler.handler);
-app.use(AppErrorHandler.notFound);
+
+app.use(AppErrorHandler.errorHandler);
 
 export default app;
