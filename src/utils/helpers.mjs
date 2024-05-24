@@ -15,7 +15,7 @@ export const validateObjectId = (id) => {
 
 export const handlePaginationSort = ({
   pageNumber = 1,
-  limit = 20,
+  limit = 10,
   order = -1,
   orderBy = "createdAt",
 }) => {

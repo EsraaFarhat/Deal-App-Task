@@ -15,6 +15,9 @@ const MESSAGES = {
   
   PROPERTY_REQUEST_NOT_FOUND: "There is no property request with entered id",
   INVALID_PROPERTY_REQUEST_ID: "Invalid property request id",
+
+  AD_NOT_FOUND: "There is no ad with entered id",
+  INVALID_AD_ID: "Invalid ad id",
 };
 
 export default MESSAGES;
