@@ -33,18 +33,61 @@ export default class AdsController {
     }
 
     const { skip, limit } = handlePaginationSort(req.query);
-    const options = {
-      skip,
-      limit,
-    };
 
     const priceTolerance = 0.1;
+    const minPrice = ad.price * (1 - priceTolerance);
+    const maxPrice = ad.price * (1 + priceTolerance);
+
+    const pipeline = [
+      {
+        $match: {
+          district: ad.district,
+          price: { $gte: minPrice, $lte: maxPrice },
+          area: ad.area,
+        },
+      },
+      { $sort: { refreshedAt: -1 } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      { $unwind: "$user" },
+      {
+        $project: {
+          user: { _id: "$user._id", name: "$user.name" },
+          propertyType: 1,
+          area: 1,
+          price: 1,
+          city: 1,
+          district: 1,
+          description: 1,
+          refreshedAt: 1,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          count: { $sum: 1 },
+          rows: { $push: "$$ROOT" },
+        },
+      },
+      {
+        $project: {
+          count: 1,
+          rows: {
+            $slice: ["$rows", skip, parseInt(limit)],
+          },
+        },
+      },
+    ]
 
     const [matchingRequests] =
-      await AdsService.getPropertyRequestsMatchesForAnAd(
-        ad,
-        priceTolerance,
-        options
+      await AdsService.aggregate(
+       pipeline
       );
 
     if (!matchingRequests) {
