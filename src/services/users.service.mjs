@@ -26,6 +26,30 @@ export default class UsersService {
     return updatedUser;
   }
 
+  static async getAdsStatisticsForUser(id, projection, options) {
+    const updatedUser = await UsersEntity.findOneAndUpdate(filters, body, {
+      new: true,
+    });
+    return updatedUser;
+  }
+
+  static async getPropertyRequestsStatisticsForUser(id, projection, options) {
+    const updatedUser = await UsersEntity.findOneAndUpdate(filters, body, {
+      new: true,
+    });
+    return updatedUser;
+  }
+
+  static async aggregate(pipeline) {
+    const users = await UsersEntity.aggregate(pipeline);
+    return users;
+  }
+
+  static async count(filters) {
+    const count = await UsersEntity.countDocuments(filters);
+    return count;
+  }
+
   static validateUserLogin = (body) => {
     const schema = Joi.object({
       phoneNumber: Joi.string().min(1).max(100).required(),

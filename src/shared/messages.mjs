@@ -18,6 +18,9 @@ const MESSAGES = {
 
   AD_NOT_FOUND: "There is no ad with entered id",
   INVALID_AD_ID: "Invalid ad id",
+
+  USER_NOT_FOUND: "There is no user with entered id",
+  INVALID_USER_ID: "Invalid user id",
 };
 
 export default MESSAGES;
