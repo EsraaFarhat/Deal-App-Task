@@ -20,7 +20,7 @@ const authMiddleware = async (req, res, next) => {
 
     const decodedToken = jwt.verify(token, jwtSecret);
 
-    const user = await UsersService.getUserById(decodedToken.userId);
+    const user = await UsersService.getOneById(decodedToken.userId);
 
     // Attach the user object to the request for further use in subsequent middleware or routes
     req.user = user;

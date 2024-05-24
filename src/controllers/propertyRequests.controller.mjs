@@ -7,7 +7,7 @@ import { HTTP_CODES } from "../shared/status-codes.mjs";
 export default class PropertyRequestsController {
   // Function to create a new propertyRequest
   static async createOne(req, res) {
-    const { error } = PropertyRequestsService.createPropertyRequestSchema(
+    const { error } = PropertyRequestsService.validateCreatePropertyRequest(
       req.body
     );
     if (error) {
@@ -15,7 +15,7 @@ export default class PropertyRequestsController {
     }
 
     req.body.userId = req.user._id;
-    let propertyRequest = await PropertyRequestsService.addPropertyRequest(
+    let propertyRequest = await PropertyRequestsService.createOne(
       req.body
     );
 
@@ -32,7 +32,7 @@ export default class PropertyRequestsController {
       throw new BadRequestError(MESSAGES.INVALID_PROPERTY_REQUEST_ID);
     }
 
-    const { error } = PropertyRequestsService.updatePropertyRequestSchema(
+    const { error } = PropertyRequestsService.validateUpdatePropertyRequest(
       req.body
     );
     if (error) {
@@ -40,13 +40,13 @@ export default class PropertyRequestsController {
     }
 
     const propertyRequest =
-      await PropertyRequestsService.getPropertyRequestById(id, ["_id"]);
+      await PropertyRequestsService.getOneById(id, ["_id"]);
     if (!propertyRequest) {
       throw new NotFoundError(MESSAGES.PROPERTY_REQUEST_NOT_FOUND);
     }
 
     let updatedPropertyRequest =
-      await PropertyRequestsService.updatePropertyRequest({ _id: id }, req.body);
+      await PropertyRequestsService.updateOne({ _id: id }, req.body);
 
     res.send({ data: updatedPropertyRequest });
   }

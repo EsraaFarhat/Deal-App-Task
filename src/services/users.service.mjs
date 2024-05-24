@@ -2,31 +2,31 @@ import Joi from "joi";
 import UsersEntity from "../models/users.model.mjs";
 
 export default class UsersService {
-  static async getUserById(id, projection, options) {
+  static async getOneById(id, projection, options) {
     const user = await UsersEntity.findById(id, projection, options);
     return user;
   }
 
-  static async getUser(filters, projection, options) {
+  static async getOne(filters, projection, options) {
     const user = await UsersEntity.findOne(filters, projection, options);
     return user;
   }
 
-  static async addUser(body) {
+  static async createOne(body) {
     let addedUser = new UsersEntity(body);
     addedUser = addedUser.save();
 
     return addedUser;
   }
 
-  static async updateUser(filters, body) {
+  static async updateOne(filters, body) {
     const updatedUser = await UsersEntity.findOneAndUpdate(filters, body, {
       new: true,
     });
     return updatedUser;
   }
 
-  static userLoginSchema = (body) => {
+  static validateUserLogin = (body) => {
     const schema = Joi.object({
       phoneNumber: Joi.string().min(1).max(100).required(),
       password: Joi.string()

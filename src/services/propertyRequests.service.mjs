@@ -4,31 +4,31 @@ import PropertyRequestsEntity from "../models/propertyRequests.model.mjs";
 import { PropertyType } from "../shared/enums.mjs";
 
 export default class PropertyRequestsService {
-  static async getPropertyRequestById(id, projection, options) {
+  static async getOneById(id, projection, options) {
     const propertyRequest = await PropertyRequestsEntity.findById(id, projection, options);
     return propertyRequest;
   }
 
-  static async getPropertyRequest(filters, projection, options) {
+  static async getOne(filters, projection, options) {
     const propertyRequest = await PropertyRequestsEntity.findOne(filters, projection, options);
     return propertyRequest;
   }
 
-  static async addPropertyRequest(body) {
+  static async createOne(body) {
     let addedPropertyRequest = new PropertyRequestsEntity(body);
     addedPropertyRequest = addedPropertyRequest.save();
 
     return addedPropertyRequest;
   }
 
-  static async updatePropertyRequest(filters, body) {
+  static async updateOne(filters, body) {
     const updatedPropertyRequest = await PropertyRequestsEntity.findOneAndUpdate(filters, body, {
       new: true,
     });
     return updatedPropertyRequest;
   }
 
-  static createPropertyRequestSchema = (propertyRequest) => {
+  static validateCreatePropertyRequest= (propertyRequest) => {
     const schema = Joi.object({
       propertyType: Joi.string()
         .trim()
@@ -44,7 +44,7 @@ export default class PropertyRequestsService {
     return schema.validate(propertyRequest);
   };
 
-  static updatePropertyRequestSchema = (propertyRequest) => {
+  static validateUpdatePropertyRequest = (propertyRequest) => {
     const schema = Joi.object({
       propertyType: Joi.string()
         .trim()

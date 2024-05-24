@@ -13,12 +13,12 @@ export default class UsersController {
   // Function to login
   static async login(req, res) {
     try {
-      const { error } = UsersService.userLoginSchema(req.body);
+      const { error } = UsersService.validateUserLogin(req.body);
       if (error) {
         throw new BadRequestError(error.details[0].message);
       }
 
-      let user = await UsersService.getUser(
+      let user = await UsersService.getOne(
         {
           phoneNumber: req.body.phoneNumber,
         },
