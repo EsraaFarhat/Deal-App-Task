@@ -10,6 +10,7 @@ import { morganErrorHandler, morganSuccessHandler } from "./config/morgan.mjs";
 
 import authRoutes from "./routes/auth.routes.mjs";
 import propertyRequestsRoutes from "./routes/propertyRequests.routes.mjs";
+import adsRoutes from "./routes/ads.routes.mjs";
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use(compression());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/propertyRequests", propertyRequestsRoutes);
+app.use("/api/ads", adsRoutes);
 
 
 app.use(AppErrorHandler.errorHandler);
