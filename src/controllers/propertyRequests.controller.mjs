@@ -45,6 +45,7 @@ export default class PropertyRequestsController {
       throw new NotFoundError(MESSAGES.PROPERTY_REQUEST_NOT_FOUND);
     }
 
+    req.body.refreshedAt = new Date();
     let updatedPropertyRequest =
       await PropertyRequestsService.updateOne({ _id: id }, req.body);
 
