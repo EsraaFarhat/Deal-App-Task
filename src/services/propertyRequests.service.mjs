@@ -46,12 +46,7 @@ export default class PropertyRequestsService {
 
   static validateUpdatePropertyRequest = (propertyRequest) => {
     const schema = Joi.object({
-      propertyType: Joi.string()
-        .trim()
-        .valid(...Object.values(PropertyType)),
       area: Joi.string().trim(),
-      city: Joi.string().trim(),
-      district: Joi.string().trim(),
       price: Joi.number().min(0),
       description: Joi.string().trim(),
     });
