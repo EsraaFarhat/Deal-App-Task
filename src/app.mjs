@@ -2,6 +2,8 @@ import express from "express";
 import compression from "compression";
 import helmet from "helmet";
 import cors from "cors";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 
 import "./database/connection.mjs";
 import config from "./config/config.mjs";
@@ -12,8 +14,28 @@ import authRoutes from "./routes/auth.routes.mjs";
 import propertyRequestsRoutes from "./routes/propertyRequests.routes.mjs";
 import adsRoutes from "./routes/ads.routes.mjs";
 import usersRoutes from "./routes/users.routes.mjs";
+import docs from "./swagger-docs.json" assert { type: "json" };
 
 const app = express();
+
+const options = {
+  swaggerDefinition: {
+    info: {
+      title: "My API",
+      version: "1.0.0",
+      description: "My API Information",
+    },
+    servers: [
+      {
+        url: "http://localhost:3000",
+      },
+    ],
+  },
+  apis: ["./routes/*.mjs"],
+};
+
+const specs = swaggerJsdoc(options);
+app.use('/api-docs', swaggerUi.serveFiles(docs), swaggerUi.setup(specs));
 
 app.use(morganSuccessHandler);
 app.use(morganErrorHandler);

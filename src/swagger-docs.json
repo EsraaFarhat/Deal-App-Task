@@ -1,0 +1,521 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "API Documentation",
+        "version": "1.0.0",
+        "description": "API documentation for property requests and user statistics"
+    },
+    "paths": {
+        "/api/auth/login": {
+            "post": {
+                "summary": "Login User",
+                "operationId": "loginUser",
+                "tags": [
+                    "Auth"
+                ],
+                "requestBody": {
+                    "description": "User login data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "phoneNumber": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "phoneNumber",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User logged in successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "_id": {
+                                                            "type": "string"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "phoneNumber": {
+                                                            "type": "string"
+                                                        },
+                                                        "role": {
+                                                            "type": "string"
+                                                        },
+                                                        "status": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "token": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "error": {
+                                            "type": "null"
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "data": {
+                                        "user": {
+                                            "_id": "664e7923cd168f36716a212e",
+                                            "name": "Agent User",
+                                            "phoneNumber": "1122334455",
+                                            "role": "AGENT",
+                                            "status": "ACTIVE"
+                                        },
+                                        "token": "jwt_token_example"
+                                    },
+                                    "error": null
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "null"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "data": null,
+                                    "error": "Invalid data"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "UnAuthorizedError error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "null"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "data": null,
+                                    "error": "Invalid phoneNumber or password"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/propertyRequests/": {
+            "post": {
+                "summary": "Create a Property Request",
+                "operationId": "createPropertyRequest",
+                "tags": [
+                    "Property Requests"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Property request data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PropertyRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Property request created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "propertyType": {
+                                                    "type": "string"
+                                                },
+                                                "area": {
+                                                    "type": "string"
+                                                },
+                                                "city": {
+                                                    "type": "string"
+                                                },
+                                                "district": {
+                                                    "type": "string"
+                                                },
+                                                "price": {
+                                                    "type": "number"
+                                                },
+                                                "description": {
+                                                    "type": "string"
+                                                },
+                                                "refreshedAt": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "userId": {
+                                                    "type": "string"
+                                                },
+                                                "_id": {
+                                                    "type": "string"
+                                                },
+                                                "createdAt": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "updatedAt": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "__v": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "data": {
+                                        "propertyType": "APARTMENT",
+                                        "area": "area 3",
+                                        "city": "city 3",
+                                        "district": "district 3",
+                                        "price": 1500,
+                                        "description": "description...",
+                                        "refreshedAt": "2024-05-24T16:03:01.028Z",
+                                        "userId": "664e7923cd168f36716a212c",
+                                        "_id": "6650bc4d804014f9c497b9cf",
+                                        "createdAt": "2024-05-24T16:11:57.569Z",
+                                        "updatedAt": "2024-05-24T16:11:57.569Z",
+                                        "__v": 0
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "null"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "data": null,
+                                    "error": "Invalid data"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "null"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "data": null,
+                                    "error": "Invalid token"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "null"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "data": null,
+                                    "error": "Forbidden"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/statistics": {
+            "get": {
+                "summary": "Get User Statistics",
+                "operationId": "getUserStatistics",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User statistics retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "users": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "_id": {
+                                                                "type": "string"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "phoneNumber": {
+                                                                "type": "string"
+                                                            },
+                                                            "role": {
+                                                                "type": "string"
+                                                            },
+                                                            "adsCount": {
+                                                                "type": "integer"
+                                                            },
+                                                            "totalAdsAmount": {
+                                                                "type": "number"
+                                                            },
+                                                            "requestsCount": {
+                                                                "type": "integer"
+                                                            },
+                                                            "totalRequestsAmount": {
+                                                                "type": "number"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "pageNumber": {
+                                            "type": "integer"
+                                        },
+                                        "limit": {
+                                            "type": "integer"
+                                        },
+                                        "total": {
+                                            "type": "integer"
+                                        },
+                                        "hasNextPage": {
+                                            "type": "boolean"
+                                        },
+                                        "hasPreviousPage": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "data": {
+                                        "users": [
+                                            {
+                                                "_id": "664e7923cd168f36716a212e",
+                                                "name": "Agent User",
+                                                "phoneNumber": "1122334455",
+                                                "role": "AGENT",
+                                                "adsCount": 2,
+                                                "totalAdsAmount": 4700,
+                                                "requestsCount": 0,
+                                                "totalRequestsAmount": 0
+                                            },
+                                            {
+                                                "_id": "664e7923cd168f36716a212d",
+                                                "name": "Client User",
+                                                "phoneNumber": "0987654321",
+                                                "role": "CLIENT",
+                                                "adsCount": 0,
+                                                "totalAdsAmount": 0,
+                                                "requestsCount": 4,
+                                                "totalRequestsAmount": 8450
+                                            }
+                                        ]
+                                    },
+                                    "page": 1,
+                                    "limit": 2,
+                                    "total": 3,
+                                    "hasNextPage": true,
+                                    "hasPreviousPage": false
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "null"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "data": null,
+                                    "error": "Invalid token"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "null"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "data": null,
+                                    "error": "Forbidden"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas": {
+            "PropertyRequest": {
+              "type": "object",
+              "properties": {
+                "propertyType": {
+                  "type": "string",
+                  "enum": ["VILLA", "HOUSE", "LAND", "APARTMENT"]
+                },
+                "area": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "district": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "description": {
+                  "type": "string"
+                }
+              },
+              "required": ["propertyType", "area", "city", "district", "price"]
+            }
+        }
+    }
+}

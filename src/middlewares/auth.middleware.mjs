@@ -28,10 +28,10 @@ const authMiddleware = async (req, res, next) => {
     next();
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
-      throw new BadRequestError(MESSAGES.EXPIRED_TOKEN);
+      throw new UnAuthorizedError(MESSAGES.EXPIRED_TOKEN);
     }
     if (error instanceof jwt.JsonWebTokenError) {
-      throw new BadRequestError(MESSAGES.INVALID_TOKEN);
+      throw new UnAuthorizedError(MESSAGES.INVALID_TOKEN);
     }
     throw new AppError(error);
   }

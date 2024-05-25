@@ -8,7 +8,7 @@ const MESSAGES = {
   UNAUTHORIZED_ERROR: "Unauthorized",
   UNPROCESSABLE_ENTITY_ERROR: "Unprocessable entity",
 
-  INVALID_CREDENTIALS: "Invalid email or password",
+  INVALID_CREDENTIALS: "Invalid phoneNumber or password",
   AUTHENTICATION_FAILED: "Unable to authenticate",
   EXPIRED_TOKEN: "Token has expired",
   INVALID_TOKEN: "Invalid token",

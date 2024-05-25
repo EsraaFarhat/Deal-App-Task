@@ -1,9 +1,6 @@
-import { BadRequestError, NotFoundError } from "../shared/app-error.mjs";
 import UsersService from "../services/users.service.mjs";
-import MESSAGES from "../shared/messages.mjs";
-import { handlePaginationSort, validateObjectId } from "../utils/helpers.mjs";
-import UsersEntity from "../models/users.model.mjs";
-import { UserRole, UserStatus } from "../shared/enums.mjs";
+import { handlePaginationSort } from "../utils/helpers.mjs";
+import { UserStatus } from "../shared/enums.mjs";
 
 export default class UsersController {
   static async getStatistics(req, res) {
@@ -78,7 +75,7 @@ export default class UsersController {
 
     res.send({
       data: { users },
-      pageNumber,
+      page: pageNumber,
       limit,
       total,
       hasNextPage,
