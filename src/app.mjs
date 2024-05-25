@@ -16,6 +16,8 @@ import adsRoutes from "./routes/ads.routes.mjs";
 import usersRoutes from "./routes/users.routes.mjs";
 import docs from "./swagger-docs.json" assert { type: "json" };
 
+import './cron/index.mjs';  // Ensure cron jobs are initialized
+
 const app = express();
 
 const options = {
