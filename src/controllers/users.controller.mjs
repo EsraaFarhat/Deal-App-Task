@@ -74,7 +74,7 @@ export default class UsersController {
     const hasPreviousPage = pageNumber > 1;
 
     res.send({
-      data: { users },
+      data: { rows: users },
       page: pageNumber,
       limit,
       total,

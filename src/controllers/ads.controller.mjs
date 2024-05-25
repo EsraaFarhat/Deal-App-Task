@@ -3,6 +3,7 @@ import AdsService from "../services/ads.service.mjs";
 import MESSAGES from "../shared/messages.mjs";
 import { handlePaginationSort, validateObjectId } from "../utils/helpers.mjs";
 import { HTTP_CODES } from "../shared/status-codes.mjs";
+import PropertyRequestsService from "../services/propertyRequests.service.mjs";
 
 export default class AdsController {
   // Function to create a new ad
@@ -86,7 +87,7 @@ export default class AdsController {
     ]
 
     const [matchingRequests] =
-      await AdsService.aggregate(
+      await PropertyRequestsService.aggregate(
        pipeline
       );
 

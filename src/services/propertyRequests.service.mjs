@@ -28,6 +28,11 @@ export default class PropertyRequestsService {
     return updatedPropertyRequest;
   }
 
+  static async aggregate(pipeline) {
+    const propertyRequests = await PropertyRequestsEntity.aggregate(pipeline);
+    return propertyRequests;
+  }
+
   static validateCreatePropertyRequest= (propertyRequest) => {
     const schema = Joi.object({
       propertyType: Joi.string()

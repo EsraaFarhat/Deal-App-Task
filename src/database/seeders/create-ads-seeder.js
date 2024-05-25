@@ -5,17 +5,20 @@ import { PropertyType, UserRole } from "../../shared/enums.mjs";
 async function createAds() {
   await AdsEntity.deleteMany({}); // Clear the collection
 
-  const agent = await UsersEntity.findOne({ role: UserRole.AGENT }, "_id");
+  const agents = await UsersEntity.find({ role: UserRole.AGENT }, "_id", {
+    skip: 0,
+    limit: 2,
+  });
 
   const ads = [
     {
       propertyType: PropertyType.APARTMENT,
-      area: "130",
+      area: "120",
       city: "New York",
       district: "Manhattan",
       price: 1600,
       description: "Spacious apartment available",
-      userId: agent._id,
+      userId: agents[0]._id,
     },
     {
       propertyType: PropertyType.HOUSE,
@@ -24,7 +27,7 @@ async function createAds() {
       district: "Bay Area",
       price: 3100,
       description: "Beautiful house with garden",
-      userId: agent._id,
+      userId: agents[1]._id,
     },
   ];
 

@@ -126,10 +126,10 @@ describe("Admin Statistics Endpoint", () => {
     expect(res.body).to.have.property("hasNextPage");
     expect(res.body).to.have.property("hasPreviousPage");
 
-    const users = res.body.data.users;
-    expect(users).to.be.an("array").that.has.lengthOf(2);
+    const rows = res.body.data.rows;
+    expect(rows).to.be.an("array").that.has.lengthOf(2);
 
-    users.forEach((user) => {
+    rows.forEach((user) => {
       expect(user).to.have.property("_id");
       expect(user).to.have.property("name");
       expect(user).to.have.property("role");

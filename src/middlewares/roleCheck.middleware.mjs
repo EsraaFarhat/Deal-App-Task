@@ -7,7 +7,6 @@ import MESSAGES from "../shared/messages.mjs";
 
 const checkRole =  (roles) => async (req, res, next) => {
   try {
-    
     if(req.user.role != UserRole.ADMIN && !roles.includes(req.user.role)){
       throw new ForbiddenError(MESSAGES.FORBIDDEN_ERROR);
     }

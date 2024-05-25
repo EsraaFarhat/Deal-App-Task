@@ -21,6 +21,9 @@ const authMiddleware = async (req, res, next) => {
     const decodedToken = jwt.verify(token, jwtSecret);
 
     const user = await UsersService.getOneById(decodedToken.userId);
+    if(!user){
+      throw new UnAuthorizedError(MESSAGES.INVALID_TOKEN);
+    }
 
     // Attach the user object to the request for further use in subsequent middleware or routes
     req.user = user;

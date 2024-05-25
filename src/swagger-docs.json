@@ -348,7 +348,7 @@
                                         "data": {
                                             "type": "object",
                                             "properties": {
-                                                "users": {
+                                                "rows": {
                                                     "type": "array",
                                                     "items": {
                                                         "type": "object",
@@ -401,7 +401,7 @@
                                 },
                                 "example": {
                                     "data": {
-                                        "users": [
+                                        "rows": [
                                             {
                                                 "_id": "664e7923cd168f36716a212e",
                                                 "name": "Agent User",
