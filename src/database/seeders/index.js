@@ -3,6 +3,7 @@ import createUsersSeeder from './create-users-seeder.js';
 import createPropertyRequestsSeeder from './create-propertyRequests-seeder.js';
 import createAdsSeeder from './create-ads-seeder.js';
 import { db } from '../connection.mjs';
+import logger from '../../shared/logger.mjs';
 
 async function runSeeders() {
   try {
@@ -12,9 +13,9 @@ async function runSeeders() {
     await createPropertyRequestsSeeder();
     await createAdsSeeder();
 
-    console.log('All seeders executed!');
+    logger.info('All seeders executed!');
   } catch (error) {
-    console.error('Error running seeders:', error);
+    logger.error('Error running seeders:', error);
   } finally {
     mongoose.connection.close();
   }

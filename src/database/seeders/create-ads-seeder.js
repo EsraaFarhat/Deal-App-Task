@@ -1,6 +1,7 @@
 import UsersEntity from "../../models/users.model.mjs";
 import AdsEntity from "../../models/ads.model.mjs";
 import { PropertyType, UserRole } from "../../shared/enums.mjs";
+import logger from "../../shared/logger.mjs";
 
 async function createAds() {
   await AdsEntity.deleteMany({}); // Clear the collection
@@ -32,7 +33,7 @@ async function createAds() {
   ];
 
   await AdsEntity.insertMany(ads);
-  console.log("Ads seeded!");
+  logger.info("Ads seeded!");
 }
 
 export default createAds;

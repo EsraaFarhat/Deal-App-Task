@@ -1,4 +1,5 @@
 import UsersEntity from "../../models/users.model.mjs";
+import logger from "../../shared/logger.mjs";
 import { hashString } from "../../utils/helpers.mjs";
 
 async function createUsers() {
@@ -52,7 +53,7 @@ async function createUsers() {
   ];
 
   await UsersEntity.insertMany(users);
-  console.log("Users seeded!");
+  logger.info("Users seeded!");
 }
 
 export default createUsers;

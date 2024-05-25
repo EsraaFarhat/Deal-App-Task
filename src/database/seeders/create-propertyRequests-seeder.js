@@ -1,6 +1,7 @@
 import UsersEntity from "../../models/users.model.mjs";
 import PropertyRequestsEntity from "../../models/propertyRequests.model.mjs";
 import { PropertyType, UserRole } from "../../shared/enums.mjs";
+import logger from "../../shared/logger.mjs";
 
 async function createPropertyRequests() {
   await PropertyRequestsEntity.deleteMany({}); // Clear the collection
@@ -59,7 +60,7 @@ async function createPropertyRequests() {
   ];
 
   await PropertyRequestsEntity.insertMany(propertyRequests);
-  console.log("Property Requests seeded!");
+  logger.info("Property Requests seeded!");
 }
 
 export default createPropertyRequests;

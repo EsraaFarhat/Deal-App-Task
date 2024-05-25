@@ -112,7 +112,6 @@ describe("Admin Statistics Endpoint", () => {
   });
 
   it("should return user statistics for admin", async () => {
-    console.log(adminToken);
     const res = await request(app)
       .get("/api/users/statistics")
       .set("Authorization", `Bearer ${adminToken}`)

@@ -16,5 +16,5 @@ COPY . .
 # Expose port 3000
 EXPOSE 3000
 
-# Command to run the application and seed the database
-ENTRYPOINT ["sh", "-c", "npm start && npm run seed"]
+# Command to run the application 
+CMD ["npm", "start"]

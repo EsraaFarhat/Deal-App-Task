@@ -5,7 +5,7 @@ services:
     image: mongo:latest
     container_name: mongodb
     ports:
-      - "27017:27017"
+      - "27018:27017"
     environment:
       MONGO_INITDB_DATABASE: deal_app_task_db
 
@@ -26,6 +26,18 @@ services:
 
     depends_on:
       - mongodb
+
+  seeder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: seeder
+    environment:
+      PORT: 3000
+      NODE_ENV: development
+      MONGODB_HOST: mongodb://mongodb:27017/
+      MONGODB_NAME: deal_app_task_db
+    command: sh -c "npm run seed && sleep infinity"
 
 volumes:
   mongo-data:
