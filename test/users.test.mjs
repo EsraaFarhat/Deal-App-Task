@@ -18,21 +18,21 @@ describe("Admin Statistics Endpoint", () => {
       name: "Admin User",
       phoneNumber: "1234567890",
       role: "ADMIN",
-      password: "password123",
+      password: "Aa12345@",
     });
 
     const agent = await UsersEntity.create({
       name: "Agent User",
       phoneNumber: "1122334455",
       role: "AGENT",
-      password: "password123",
+      password: "Aa12345@",
     });
 
     const client = await UsersEntity.create({
       name: "Client User",
       phoneNumber: "0987654321",
       role: "CLIENT",
-      password: "password123",
+      password: "Aa12345@",
     });
 
     await AdsEntity.create([

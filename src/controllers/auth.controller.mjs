@@ -2,7 +2,6 @@ import _ from "lodash";
 
 import UsersService from "../services/users.service.mjs";
 import {
-  AppError,
   BadRequestError,
   UnAuthorizedError,
 } from "../shared/app-error.mjs";
@@ -10,9 +9,16 @@ import MESSAGES from "../shared/messages.mjs";
 import { generateToken } from "../utils/helpers.mjs";
 
 export default class UsersController {
-  // Function to login
+  /**
+   * Logs in a user using their phone number and password.
+   *
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @return {Promise<void>} - A promise that resolves when the user is logged in.
+   * @throws {BadRequestError} - If the user login data fails validation.
+   * @throws {UnAuthorizedError} - If the user credentials are invalid.
+   */
   static async login(req, res) {
-    try {
       const { error } = UsersService.validateUserLogin(req.body);
       if (error) {
         throw new BadRequestError(error.details[0].message);
@@ -42,8 +48,5 @@ export default class UsersController {
         },
         error: null,
       });
-    } catch (error) {
-      throw new AppError(error);
-    }
   }
 }

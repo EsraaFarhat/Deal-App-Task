@@ -3,10 +3,17 @@ import PropertyRequestsService from "../services/propertyRequests.service.mjs";
 import MESSAGES from "../shared/messages.mjs";
 import { handlePaginationSort, validateObjectId } from "../utils/helpers.mjs";
 import { HTTP_CODES } from "../shared/status-codes.mjs";
-import { PropertyType } from "../shared/enums.mjs";
+import { PropertyType, UserRole } from "../shared/enums.mjs";
 
 export default class PropertyRequestsController {
-  // Function to create a new propertyRequest
+  /**
+   * Creates a new property request.
+   *
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @return {Promise<void>} - A promise that resolves when the property request is created.
+   * @throws {BadRequestError} - If the request body fails validation.
+   */
   static async createOne(req, res) {
     const { error } = PropertyRequestsService.validateCreatePropertyRequest(
       req.body
@@ -23,19 +30,34 @@ export default class PropertyRequestsController {
     });
   }
 
+  /**
+   * Retrieves all property requests based on the provided filters, pagination, and sorting options.
+   *
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @return {Promise<void>} - A promise that resolves when the property requests are retrieved and sent in the response.
+   * @throws {BadRequestError} - If the provided property type is invalid.
+   */
   static async getAll(req, res) {
-    const { skip, limit, sort } = handlePaginationSort(req.query);
+    const { skip, limit } = handlePaginationSort(req.query);
     const options = {
       skip,
       limit,
-      sort,
+      sort: { refreshedAt: -1 },
     };
 
     const { propertyType, minPrice, maxPrice, area, city, district } =
       req.query;
-    const filters = { userId: req.user._id };
+
+    let filters = {};
+    if (req.user.role === UserRole.ADMIN) {
+      filters = {};
+    } else {
+      filters = { userId: req.user._id };
+    }
+
     if (propertyType) {
-      if(!Object.values(PropertyType).includes(propertyType)) {
+      if (!Object.values(PropertyType).includes(propertyType)) {
         throw new BadRequestError(MESSAGES.INVALID_PROPERTY_TYPE);
       }
       filters.propertyType = propertyType;
@@ -64,7 +86,16 @@ export default class PropertyRequestsController {
     });
   }
 
-  // Function to update propertyRequest by ID
+  /**
+   * Updates a property request by ID.
+   *
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @return {Promise<void>} A promise that resolves when the property request is updated.
+   * @throws {BadRequestError} - If the property request ID is invalid.
+   * @throws {BadRequestError} - If the request body fails validation.
+   * @throws {NotFoundError} - If the property request is not found.
+   */
   static async updateOne(req, res) {
     const { id } = req.params;
     let response = validateObjectId(id);
@@ -79,7 +110,13 @@ export default class PropertyRequestsController {
       throw new BadRequestError(error.details[0].message);
     }
 
-    const propertyRequest = await PropertyRequestsService.getOneById(id, [
+    let filters = {};
+    if (req.user.role === UserRole.ADMIN) {
+      filters = { _id: id };
+    } else {
+      filters = { _id: id, userId: req.user._id };
+    }
+    const propertyRequest = await PropertyRequestsService.getOne(filters, [
       "_id",
     ]);
     if (!propertyRequest) {

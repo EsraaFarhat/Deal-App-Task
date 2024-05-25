@@ -16,11 +16,13 @@ adsRoutes
     asyncWrapper(checkRole([UserRole.AGENT])),
     asyncWrapper(AdsController.createOne)
   )
+  // Route to get all ads
   .get(
     asyncWrapper(checkRole([UserRole.AGENT])),
     asyncWrapper(AdsController.getAll)
   );
 
+// Route to get all propertyRequests that matches an ad by Id
 adsRoutes.route("/:id/matches").get(asyncWrapper(AdsController.getAdMatches));
 
 export default adsRoutes;

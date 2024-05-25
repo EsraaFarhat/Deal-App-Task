@@ -2,6 +2,12 @@ import UsersEntity from "../../models/users.model.mjs";
 import logger from "../../shared/logger.mjs";
 import { hashString } from "../../utils/helpers.mjs";
 
+/**
+ * Creates users in the database by deleting the existing users collection,
+ * hashing the password, and inserting the new users.
+ *
+ * @return {Promise<void>} A promise that resolves when the users are successfully seeded.
+ */
 async function createUsers() {
   await UsersEntity.deleteMany({}); // Clear the collection
 

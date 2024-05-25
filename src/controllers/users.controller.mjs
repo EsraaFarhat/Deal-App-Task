@@ -3,6 +3,14 @@ import { handlePaginationSort } from "../utils/helpers.mjs";
 import { UserStatus } from "../shared/enums.mjs";
 
 export default class UsersController {
+/**
+ * Retrieves statistics for active users, including the number of ads and requests they have,
+ * as well as the total amount for ads and requests. The results are paginated and sorted.
+ *
+ * @param {Object} req - The request object containing the query parameters.
+ * @param {Object} res - The response object to send the statistics.
+ * @return {Promise<void>} - A promise that resolves when the statistics are sent.
+ */
   static async getStatistics(req, res) {
     const pageNumber = parseInt(req.query.pageNumber) || 1;
     const { skip, limit, sort } = handlePaginationSort(req.query);

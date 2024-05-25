@@ -21,11 +21,12 @@ The Property Matching System aims to connect property requests with relevant ads
   - Endpoint for clients to create property requests.
 
 - **Update Property Request:**
-  - Endpoint for clients to update property requests.
+  - Endpoint for clients to update their property requests.
+  - Update request will also update the refreshedAt to current time.
 
 - **List all Property Requests:**
-  - Retrieve a list of all property requests created by the logged-in user with pagination sorted descending by createdAt.
-  - Filter by propertyType, minPrice, maxPrice, area, city, district.
+  - Retrieve a list of all property requests created by the logged-in user with pagination sorted descending by refreshedAt.
+  - Filter by propertyType, minPrice, maxPrice, area, city, district. (optional)
   
 #### Ads
 
@@ -33,8 +34,8 @@ The Property Matching System aims to connect property requests with relevant ads
   - Endpoint for agents to create ads for properties.
 
 - **List all Property Requests:**
-  - Retrieve a list of all ads created by the logged-in user with pagination sorted descending by createdAt.
-  - Filter by propertyType, minPrice, maxPrice, area, city, district.
+  - Retrieve a list of all ads created by the logged-in user with pagination sorted descending by refreshedAt.
+  - Filter by propertyType, minPrice, maxPrice, area, city, district. (optional)
 
 #### Matching System
 
@@ -45,7 +46,7 @@ The Property Matching System aims to connect property requests with relevant ads
 
 #### Admin Statistics
 - **Get Admin Statistics:**
-   - Endpoint for admin users to retrieve statistics about ads and requests for users.
+   - Endpoint for admin users to retrieve statistics about ads and requests for **ACTIVE** users.
    - Include pagination and total count of users.
 
 ### 3. Documentation

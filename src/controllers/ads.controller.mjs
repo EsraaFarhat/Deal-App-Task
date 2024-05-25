@@ -4,10 +4,17 @@ import MESSAGES from "../shared/messages.mjs";
 import { handlePaginationSort, validateObjectId } from "../utils/helpers.mjs";
 import { HTTP_CODES } from "../shared/status-codes.mjs";
 import PropertyRequestsService from "../services/propertyRequests.service.mjs";
-import { PropertyType } from "../shared/enums.mjs";
+import { PropertyType, UserRole } from "../shared/enums.mjs";
 
 export default class AdsController {
-  // Function to create a new ad
+  /**
+   * Creates a new ad.
+   *
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @return {Promise<void>} - A promise that resolves when the ad is created.
+   * @throws {BadRequestError} - If the ad data fails validation.
+   */
   static async createOne(req, res) {
     const { error } = AdsService.validateCreateAd(req.body);
     if (error) {
@@ -22,17 +29,32 @@ export default class AdsController {
     });
   }
 
+/**
+ * Retrieves all ads based on the provided filters, pagination, and sorting options.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @return {Promise<void>} - A promise that resolves when the ads are retrieved and sent in the response.
+ * @throws {BadRequestError} - If the provided property type is invalid.
+ */
   static async getAll(req, res) {
-    const { skip, limit, sort } = handlePaginationSort(req.query);
+    const { skip, limit } = handlePaginationSort(req.query);
     const options = {
       skip,
       limit,
-      sort,
+      sort: { refreshedAt: -1 },
     };
 
     const { propertyType, minPrice, maxPrice, area, city, district } =
       req.query;
-    const filters = { userId: req.user._id };
+
+    let filters = {};
+    if (req.user.role === UserRole.ADMIN) {
+      filters = {};
+    } else {
+      filters = { userId: req.user._id };
+    }
+
     if (propertyType) {
       if (!Object.values(PropertyType).includes(propertyType)) {
         throw new BadRequestError(MESSAGES.INVALID_PROPERTY_TYPE);
@@ -63,6 +85,15 @@ export default class AdsController {
     });
   }
 
+  /**
+   * Retrieves the property requests matches based on the provided ad ID.
+   *
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @return {Promise<void>} - A promise that resolves when the property requests matches are retrieved and sent in the response.
+   * @throws {BadRequestError} - If the ad ID is invalid.
+   * @throws {NotFoundError} - If the ad is not found.
+   */
   static async getAdMatches(req, res) {
     const { id } = req.params;
     let response = validateObjectId(id);

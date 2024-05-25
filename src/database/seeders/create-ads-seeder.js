@@ -3,6 +3,12 @@ import AdsEntity from "../../models/ads.model.mjs";
 import { PropertyType, UserRole } from "../../shared/enums.mjs";
 import logger from "../../shared/logger.mjs";
 
+/**
+ * Creates ads in the database by deleting the existing ads collection,
+ * and inserting the new ads.
+ *
+ * @return {Promise<void>} A promise that resolves when the ads are created.
+ */
 async function createAds() {
   await AdsEntity.deleteMany({}); // Clear the collection
 

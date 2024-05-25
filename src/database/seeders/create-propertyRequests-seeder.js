@@ -3,6 +3,12 @@ import PropertyRequestsEntity from "../../models/propertyRequests.model.mjs";
 import { PropertyType, UserRole } from "../../shared/enums.mjs";
 import logger from "../../shared/logger.mjs";
 
+/**
+ * Creates property requests in the database by deleting the existing property requests collection,
+ * and inserting the new property requests.
+ *
+ * @return {Promise<void>} A promise that resolves when the property requests are created.
+ */
 async function createPropertyRequests() {
   await PropertyRequestsEntity.deleteMany({}); // Clear the collection
 

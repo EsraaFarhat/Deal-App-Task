@@ -9,6 +9,12 @@ const usersRoutes = Router();
 
 usersRoutes.use(asyncWrapper(authMiddleware));
 
-usersRoutes.route("/statistics").get(asyncWrapper(checkRole([UserRole.ADMIN])), asyncWrapper(UsersController.getStatistics));
+usersRoutes
+  .route("/statistics")
+  // Route to get user statistics
+  .get(
+    asyncWrapper(checkRole([UserRole.ADMIN])),
+    asyncWrapper(UsersController.getStatistics)
+  );
 
 export default usersRoutes;

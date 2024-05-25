@@ -16,6 +16,7 @@ propertyRequestsRoutes
   .route("/")
   // Route to create a new propertyRequest
   .post(asyncWrapper(PropertyRequestsController.createOne))
+  // Route to get all propertyRequests
   .get(asyncWrapper(PropertyRequestsController.getAll));
 
 propertyRequestsRoutes

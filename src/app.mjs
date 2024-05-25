@@ -10,10 +10,7 @@ import config from "./config/config.mjs";
 import AppErrorHandler from "./shared/error-handler.mjs";
 import { morganErrorHandler, morganSuccessHandler } from "./config/morgan.mjs";
 
-import authRoutes from "./routes/auth.routes.mjs";
-import propertyRequestsRoutes from "./routes/propertyRequests.routes.mjs";
-import adsRoutes from "./routes/ads.routes.mjs";
-import usersRoutes from "./routes/users.routes.mjs";
+import routes from "./routes/index.mjs";
 import docs from "./swagger-docs.json" assert { type: "json" };
 
 import './cron/index.mjs';  // Ensure cron jobs are initialized
@@ -56,11 +53,7 @@ app.use(
 
 app.use(compression());
 
-app.use("/api/auth", authRoutes);
-app.use("/api/propertyRequests", propertyRequestsRoutes);
-app.use("/api/ads", adsRoutes);
-app.use("/api/users", usersRoutes);
-
+app.use('/api', routes);
 
 app.use(AppErrorHandler.errorHandler);
 
