@@ -1,3 +1,5 @@
+import { PropertyType } from "./enums.mjs";
+
 const MESSAGES = {
   BAD_REQUEST_ERROR: "Bad request",
   CONFLICT_ERROR: "Conflict",
@@ -15,6 +17,7 @@ const MESSAGES = {
   
   PROPERTY_REQUEST_NOT_FOUND: "There is no property request with entered id",
   INVALID_PROPERTY_REQUEST_ID: "Invalid property request id",
+  INVALID_PROPERTY_TYPE: `Property type should be one of ${Object.values(PropertyType)}`,
 
   AD_NOT_FOUND: "There is no ad with entered id",
   INVALID_AD_ID: "Invalid ad id",

@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: deal_app_task_db
+
+  app:
+    build: .
+    container_name: dealapp-backend
+    command: npm start
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      NODE_ENV: development
+      PARAMETER_LIMIT: 10000
+      REQUEST_LIMIT: 20000
+      MONGODB_HOST: mongodb://mongodb:27017/
+      MONGODB_NAME: deal_app_task_db
+      PRIVATE_KEY: VK/ixOE08gw7nxRjNrD1CW3FMyin2pTJotsdYsNByWgCgMPuEJ5bG3v6/UsRpqhNYVm3yXRZ5Teg/jocGOE3XnLUBbShmGOW/X/PmwA/ga95qXCh7WPSvuor42ZtsddNUYS+ThCCJmItvTEyiFVAL5sCR+gLn/BXtrjvQo25LLmUrLYgtlSsrzoEDqtvpPIxMZjHfN5KBEzffDZimAp1IXh7SYi9LgvGvpQSUJ0j9ew4CKK7IHX6V1x8fcWpHmIALYuJ7iFabYhr4END6m15szf9Hh2MbAsY/UZT7csW2zFshPfiw3PjXOlBadkUp7WrLR8jRyH6+hhba99zBnxDJw==
+
+    depends_on:
+      - mongodb
+
+volumes:
+  mongo-data:

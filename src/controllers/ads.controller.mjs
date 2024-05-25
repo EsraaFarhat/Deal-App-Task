@@ -4,6 +4,7 @@ import MESSAGES from "../shared/messages.mjs";
 import { handlePaginationSort, validateObjectId } from "../utils/helpers.mjs";
 import { HTTP_CODES } from "../shared/status-codes.mjs";
 import PropertyRequestsService from "../services/propertyRequests.service.mjs";
+import { PropertyType } from "../shared/enums.mjs";
 
 export default class AdsController {
   // Function to create a new ad
@@ -18,6 +19,47 @@ export default class AdsController {
 
     res.status(HTTP_CODES.SUCCESS.CREATED).send({
       data: ad,
+    });
+  }
+
+  static async getAll(req, res) {
+    const { skip, limit, sort } = handlePaginationSort(req.query);
+    const options = {
+      skip,
+      limit,
+      sort,
+    };
+
+    const { propertyType, minPrice, maxPrice, area, city, district } =
+      req.query;
+    const filters = { userId: req.user._id };
+    if (propertyType) {
+      if (!Object.values(PropertyType).includes(propertyType)) {
+        throw new BadRequestError(MESSAGES.INVALID_PROPERTY_TYPE);
+      }
+      filters.propertyType = propertyType;
+    }
+    if (minPrice)
+      filters.price = { ...filters.price, $gte: parseFloat(minPrice) };
+    if (maxPrice)
+      filters.price = { ...filters.price, $lte: parseFloat(maxPrice) };
+    if (area) filters.area = area;
+    if (city) filters.city = city;
+    if (district) filters.district = district;
+
+    const ads = await AdsService.getAll(
+      filters,
+      "-userId -createdAt -updatedAt -__v",
+      options
+    );
+    const count = await AdsService.count(filters);
+
+    res.send({
+      data: {
+        rows: ads,
+        count,
+      },
+      error: null,
     });
   }
 
@@ -84,12 +126,11 @@ export default class AdsController {
           },
         },
       },
-    ]
+    ];
 
-    const [matchingRequests] =
-      await PropertyRequestsService.aggregate(
-       pipeline
-      );
+    const [matchingRequests] = await PropertyRequestsService.aggregate(
+      pipeline
+    );
 
     if (!matchingRequests) {
       return res.send({

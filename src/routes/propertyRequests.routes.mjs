@@ -15,7 +15,8 @@ propertyRequestsRoutes.use(
 propertyRequestsRoutes
   .route("/")
   // Route to create a new propertyRequest
-  .post(asyncWrapper(PropertyRequestsController.createOne));
+  .post(asyncWrapper(PropertyRequestsController.createOne))
+  .get(asyncWrapper(PropertyRequestsController.getAll));
 
 propertyRequestsRoutes
   .route("/:id")

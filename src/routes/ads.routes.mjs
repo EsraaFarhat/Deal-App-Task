@@ -15,6 +15,10 @@ adsRoutes
   .post(
     asyncWrapper(checkRole([UserRole.AGENT])),
     asyncWrapper(AdsController.createOne)
+  )
+  .get(
+    asyncWrapper(checkRole([UserRole.AGENT])),
+    asyncWrapper(AdsController.getAll)
   );
 
 adsRoutes.route("/:id/matches").get(asyncWrapper(AdsController.getAdMatches));

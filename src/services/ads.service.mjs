@@ -15,6 +15,11 @@ export default class AdsService {
     return ad;
   }
 
+  static async getAll(filters, projection, options) {
+    const ads = await AdsEntity.find(filters, projection, options);
+    return ads;
+  }
+
   static async createOne(body) {
     let addedAd = new AdsEntity(body);
     addedAd = addedAd.save();
@@ -32,6 +37,11 @@ export default class AdsService {
   static async aggregate(pipeline) {
     const ads = await AdsEntity.aggregate(pipeline);
     return ads;
+  }
+
+  static async count(filters) {
+    const count = await AdsEntity.countDocuments(filters);
+    return count;
   }
 
   static validateCreateAd = (ad) => {

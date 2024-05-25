@@ -14,6 +14,12 @@ export default class PropertyRequestsService {
     return propertyRequest;
   }
 
+  static async getAll(filters, projection, options) {
+    const propertyRequests = await PropertyRequestsEntity.find(filters, projection, options);
+    return propertyRequests;
+  }
+
+
   static async createOne(body) {
     let addedPropertyRequest = new PropertyRequestsEntity(body);
     addedPropertyRequest = addedPropertyRequest.save();
@@ -31,6 +37,11 @@ export default class PropertyRequestsService {
   static async aggregate(pipeline) {
     const propertyRequests = await PropertyRequestsEntity.aggregate(pipeline);
     return propertyRequests;
+  }
+
+  static async count(filters) {
+    const count = await PropertyRequestsEntity.countDocuments(filters);
+    return count;
   }
 
   static validateCreatePropertyRequest= (propertyRequest) => {

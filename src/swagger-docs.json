@@ -1,9 +1,9 @@
 {
     "openapi": "3.0.1",
     "info": {
-        "title": "API Documentation",
-        "version": "1.0.0",
-        "description": "API documentation for property requests and user statistics"
+        "title": "Property Matching System API",
+        "description": "API documentation for the Property Matching System",
+        "version": "1.0.0"
     },
     "paths": {
         "/api/auth/login": {
@@ -491,30 +491,41 @@
         },
         "schemas": {
             "PropertyRequest": {
-              "type": "object",
-              "properties": {
-                "propertyType": {
-                  "type": "string",
-                  "enum": ["VILLA", "HOUSE", "LAND", "APARTMENT"]
+                "type": "object",
+                "properties": {
+                    "propertyType": {
+                        "type": "string",
+                        "enum": [
+                            "VILLA",
+                            "HOUSE",
+                            "LAND",
+                            "APARTMENT"
+                        ]
+                    },
+                    "area": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "district": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "number",
+                        "minimum": 0
+                    },
+                    "description": {
+                        "type": "string"
+                    }
                 },
-                "area": {
-                  "type": "string"
-                },
-                "city": {
-                  "type": "string"
-                },
-                "district": {
-                  "type": "string"
-                },
-                "price": {
-                  "type": "number",
-                  "minimum": 0
-                },
-                "description": {
-                  "type": "string"
-                }
-              },
-              "required": ["propertyType", "area", "city", "district", "price"]
+                "required": [
+                    "propertyType",
+                    "area",
+                    "city",
+                    "district",
+                    "price"
+                ]
             }
         }
     }
